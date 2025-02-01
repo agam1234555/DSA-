@@ -1,0 +1,14 @@
+public class ReverseNumber {
+    public static void rev(int n) {
+        if (n == 0) {
+            return; // Base case
+        }
+        System.out.print(n % 10); // Print last digit
+        rev(n / 10); // Recursive call with remaining digits
+    }
+
+    public static void main(String[] args) {
+        int n = 54321;
+        rev(n);
+    }
+}
