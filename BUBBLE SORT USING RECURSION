@@ -1,1 +1,31 @@
-public static bubblesort()
+public class BubbleSortRec {
+    public static void main(String[] args) {
+        int arr[] = {6, 9, 10, 34, 5};
+        int r = arr.length - 1;
+        bubblesort(arr, r, 0);
+        printarr(arr);
+    }
+
+    static void printarr(int arr[]) {
+        for (int i = 0; i < arr.length; i++) {
+            System.out.print(arr[i] + " ");
+        }
+        System.out.println();
+    }
+
+    static void bubblesort(int arr[], int r, int c) {
+        if (r == 0) {
+            return;
+        }
+        if (c < r) { // Ensure we don't go out of bounds
+            if (arr[c] > arr[c + 1]) {
+                int temp = arr[c];
+                arr[c] = arr[c + 1];
+                arr[c + 1] = temp;
+            }
+            bubblesort(arr, r, c + 1);
+        } else {
+            bubblesort(arr, r - 1, 0); // Reduce the range and start from 0 again
+        }
+    }
+}
