@@ -1,0 +1,21 @@
+public class RemoveCharRecursion {
+    public static String removeChar(String str, char ch) {
+        if (str.isEmpty()) {
+            return "";
+        }
+
+        char firstChar = str.charAt(0);
+        String remainingString = removeChar(str.substring(1), ch);
+
+        return (firstChar == ch) ? remainingString : firstChar + remainingString;
+    }
+
+    public static void main(String[] args) {
+        String word = "recursion";
+        char remove = 'r';
+
+        String result = removeChar(word, remove);
+        System.out.println("Original Word: " + word);
+        System.out.println("After Removing '" + remove + "': " + result);
+    }
+}
