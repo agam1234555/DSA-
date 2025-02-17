@@ -1,0 +1,32 @@
+import java.util.ArrayList;
+import java.util.List;
+
+public class Solution { // Renamed from LetterCombinations to Solution
+    static final String[] KEYPAD = {
+        "",     "",    "abc",  "def",
+        "ghi",  "jkl", "mno",  "pqrs",
+        "tuv",  "wxyz"
+    };
+
+    public List<String> letterCombinations(String digits) {
+        if (digits.isEmpty()) return new ArrayList<>();
+        return pad("", digits);
+    }
+
+    private List<String> pad(String p, String up) {
+        List<String> result = new ArrayList<>();
+        if (up.isEmpty()) {
+            result.add(p);
+            return result;
+        }
+
+        int digit = up.charAt(0) - '0'; // Convert character to integer
+        String letters = KEYPAD[digit]; // Get corresponding letters
+
+        for (char ch : letters.toCharArray()) {
+            result.addAll(pad(p + ch, up.substring(1)));
+        }
+
+        return result;
+    }
+}
