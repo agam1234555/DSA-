@@ -1,0 +1,48 @@
+import java.util.Arrays;
+
+public class NKnights {
+    static int N;
+    static int[][] board;
+
+    static boolean isSafe(int row, int col) {
+        // Check only the 4 possible knight moves from above
+        if (row - 2 >= 0 && col - 1 >= 0 && board[row - 2][col - 1] == 1) return false;
+        if (row - 2 >= 0 && col + 1 < N && board[row - 2][col + 1] == 1) return false;
+        if (row - 1 >= 0 && col - 2 >= 0 && board[row - 1][col - 2] == 1) return false;
+        if (row - 1 >= 0 && col + 2 < N && board[row - 1][col + 2] == 1) return false;
+        return true;
+    }
+
+    static boolean solveNKnights(int row, int col, int knightsPlaced) {
+        if (knightsPlaced == N) { // Change to (N*N) for full board placement
+            printBoard();
+            return true; // Change to false to find all solutions
+        }
+
+        for (int i = row; i < N; i++) {
+            for (int j = (i == row ? col : 0); j < N; j++) {
+                if (board[i][j] == 0 && isSafe(i, j)) {
+                    board[i][j] = 1;
+                    if (solveNKnights(i, j + 1, knightsPlaced + 1)) return true;
+                    board[i][j] = 0; // Backtrack
+                }
+            }
+        }
+        return false;
+    }
+
+    static void printBoard() {
+        for (int[] row : board) {
+            System.out.println(Arrays.toString(row));
+        }
+        System.out.println();
+    }
+
+    public static void main(String[] args) {
+        N = 5; // Change N as needed
+        board = new int[N][N];
+        if (!solveNKnights(0, 0, 0)) {
+            System.out.println("No solution found.");
+        }
+    }
+}
