@@ -1,0 +1,56 @@
+import java.util.Arrays;
+
+public class NQueens {
+    static int N;
+
+    static boolean isSafe(char[][] board, int row, int col) {
+        // Check the column
+        for (int i = 0; i < row; i++) {
+            if (board[i][col] == 'Q') return false;
+        }
+
+        // Check upper left diagonal
+        for (int i = row, j = col; i >= 0 && j >= 0; i--, j--) {
+            if (board[i][j] == 'Q') return false;
+        }
+
+        // Check upper right diagonal
+        for (int i = row, j = col; i >= 0 && j < N; i--, j++) {
+            if (board[i][j] == 'Q') return false;
+        }
+
+        return true;
+    }
+
+    static boolean solveNQueens(char[][] board, int row) {
+        if (row == N) {
+            printBoard(board);
+            return true; // Set to false to find all solutions
+        }
+
+        for (int col = 0; col < N; col++) {
+            if (isSafe(board, row, col)) {
+                board[row][col] = 'Q';
+                if (solveNQueens(board, row + 1)) return true;
+                board[row][col] = '.'; // Backtrack
+            }
+        }
+        return false;
+    }
+
+    static void printBoard(char[][] board) {
+        for (char[] row : board) {
+            System.out.println(Arrays.toString(row));
+        }
+        System.out.println();
+    }
+
+    public static void main(String[] args) {
+        N = 8; // Change N as needed
+        char[][] board = new char[N][N];
+        for (char[] row : board) Arrays.fill(row, '.');
+        if (!solveNQueens(board, 0)) {
+            System.out.println("No solution found.");
+        }
+    }
+}
